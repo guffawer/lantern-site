@@ -1,6 +1,6 @@
 # Project Lantern playtest site
 
-Mobile-first clickable prototype. Static HTML/CSS/JS, no build step. Served by GitHub Pages from `main`.
+Mobile-first clickable prototype in the iOS 26 design language (system type, grouped lists, Liquid Glass controls). Static HTML/CSS/JS, no build step.
 
 Live: https://guffawer.github.io/lantern-site/
 
