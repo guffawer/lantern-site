@@ -237,3 +237,33 @@ a.cell:active,button.cell:active{background:var(--bg3)}
 .simsteps span{width:40px;height:40px;border-radius:50%;background:var(--fill);display:flex;align-items:center;justify-content:center;transition:background .3s,transform .3s}
 .simsteps .on{color:var(--l1)}.simsteps .on span{background:var(--tint);color:#fff;transform:scale(1.1)}
 .simsteps .done span{background:rgba(94,92,230,.32);color:#fff}
+/* simulation: later stages */
+.sim .lay{position:absolute;inset:0;z-index:8;opacity:0;pointer-events:none;transition:opacity .6s ease;color:#fff;overflow:hidden}
+.sim .lay.show{opacity:1}
+.sim .sim-status{z-index:12}
+#srit{background:#05051A}
+#srit .rground{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,#0B0A1C,#000)}
+#srit .rsun{position:absolute;left:50%;top:22%;width:96px;height:96px;margin-left:-48px;border-radius:50%;background:radial-gradient(circle,#FFE7B0 0%,#FFC870 60%,#FF9F0A 100%);box-shadow:0 0 50px rgba(255,200,112,.6)}
+#srit.run .rsky{animation:skyfade 6s ease-in-out both}
+#srit.run .rsun{animation:simsun 6s ease-in-out both}
+#srit .rtxt{position:absolute;left:0;right:0;bottom:14%;text-align:center;font-size:19px;font-weight:700;opacity:0}
+#srit.run .rtxt{animation:textin 6s ease-out both}
+@keyframes simsun{0%{transform:translateY(0)}80%{transform:translateY(170px)}100%{transform:translateY(180px);opacity:.2}}
+.sim .wind3{gap:6px}
+.sim .wtile{padding:12px 3px 8px;border-radius:16px;gap:6px;transition:border-color .3s,background .3s}
+.sim .wtile p{font-size:11px}
+.sim .wn{width:18px;height:18px;top:6px;left:6px;font-size:10px}
+.wtile.cur{border-color:var(--tint);background:rgba(94,92,230,.14)}
+#smcard .mopen{display:none}
+#smcard.opened .mclosed{display:none!important}
+#smcard.opened .mopen{display:flex!important;animation:rise .4s ease-out both}
+.wave{flex:1;display:flex;align-items:center;justify-content:space-between;height:34px}
+.wave i{display:block;width:3px;border-radius:2px;background:#fff;transform-origin:center;animation:wav 1s ease-in-out infinite alternate}
+@keyframes wav{from{transform:scaleY(.35);opacity:.6}to{transform:scaleY(1);opacity:1}}
+.sim-tap{position:absolute;z-index:15;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgba(255,255,255,.5);border:2px solid rgba(255,255,255,.9);opacity:0;pointer-events:none}
+.sim-tap.go{animation:tapit .7s ease-out}
+@keyframes tapit{0%{opacity:0;transform:scale(1.4)}30%{opacity:1;transform:scale(1)}55%{transform:scale(.8)}100%{opacity:0;transform:scale(1.5)}}
+#sdone.pressed{transform:scale(.95);opacity:.8}
+.simsteps{grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
+.simsteps div{font-size:10px;text-align:center;line-height:1.15}
+.simsteps span{width:34px;height:34px}
