@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="noindex">
+<title>Lantern pilot · Download for Android</title>
+<style>
+:root{--l2:rgba(235,235,245,.6);--l3:rgba(235,235,245,.3);--bg2:#1C1C1E;--tint:#5E5CE6;--tint2:#8E8CFF;--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",system-ui,Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:#fff;font:17px/1.35 var(--font);letter-spacing:-.022em;-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+main{width:100%;max-width:430px;min-height:100vh;padding:40px 16px calc(28px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:22px;background:linear-gradient(180deg,#191852 0%,#0D0C2B 38%,#000 72%)}
+.c{text-align:center}
+.icon{width:96px;height:96px;border-radius:22px;margin:0 auto;background:linear-gradient(160deg,#5E5CE6 0%,#2A2880 55%,#14133F 100%);display:flex;align-items:center;justify-content:center;color:#FFD38A;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 14px 34px rgba(0,0,0,.45)}
+h1{margin:14px 0 6px;font-size:34px;line-height:1.18;font-weight:700}
+p{margin:0}
+.l2{color:var(--l2)}.fn{font-size:13px}
+.badge{display:inline-flex;gap:6px;align-items:center;padding:5px 11px;border-radius:999px;background:rgba(255,159,10,.16);color:#FF9F0A;font-size:13px;font-weight:600;margin-top:12px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:56px;border-radius:999px;background:var(--tint);color:#fff;font-weight:600;font-size:18px;text-decoration:none}
+.btn:active{transform:scale(.97)}
+.hdr{font-size:13px;color:var(--l2);padding:0 16px 7px}
+.list{background:var(--bg2);border-radius:24px;overflow:hidden}
+.cell{display:flex;align-items:center;gap:14px;padding:12px 16px;min-height:60px;position:relative}
+.cell+.cell:before{content:"";position:absolute;top:0;right:0;left:62px;height:.5px;background:rgba(84,84,88,.6)}
+.n{width:32px;height:32px;border-radius:50%;background:rgba(118,118,128,.24);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex:none}
+.s{font-size:13px;color:var(--l2)}
+.ftr{font-size:13px;color:var(--l2);padding:7px 16px 0}
+#ver{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<main>
+  <div class="c">
+    <div class="icon"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6"/><path d="M12 3v2"/><path d="M8 7h8l1 3v7l-1 3H8l-1-3v-7z"/><path d="M12 11c1.2 1.3 1.2 3.2 0 4.5c-1.2-1.3-1.2-3.2 0-4.5z"/></svg></div>
+    <h1>Lantern pilot</h1>
+    <p class="l2">The 14-day test app for Android. Free for testers, no sign-up, no payments.</p>
+    <span class="badge">Android 8 or newer</span>
+  </div>
+
+  <a class="btn" id="dl" href="lantern-pilot.apk" download>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12"/><path d="M6 11l6 6 6-6"/><path d="M5 20h14"/></svg>
+    Download Lantern
+  </a>
+  <p class="fn l2 c">Version <span id="ver">latest</span> · about 20 MB</p>
+
+  <div>
+    <p class="hdr">Install in three taps</p>
+    <div class="list">
+      <div class="cell"><span class="n">1</span><span><b>Tap Download Lantern</b><br><span class="s">Your browser saves lantern-pilot.apk</span></span></div>
+      <div class="cell"><span class="n">2</span><span><b>Open the file, tap Install</b><br><span class="s">If asked, allow your browser to install apps, then go back</span></span></div>
+      <div class="cell"><span class="n">3</span><span><b>Open Lantern</b><br><span class="s">Type your first name or tester code and pick "I'm trying the app"</span></span></div>
+    </div>
+    <p class="ftr">Got a new link from Sid? Download again and tap Install. Your plan and nights stay as they are.</p>
+  </div>
+
+  <div>
+    <p class="hdr">What the test app records</p>
+    <div class="list">
+      <div class="cell"><span class="n">&#10003;</span><span>Screens you open, buttons you tap, and when your night starts and ends</span></div>
+      <div class="cell"><span class="n">&#10005;</span><span>Never your notes, messages, phone number or codes</span></div>
+    </div>
+  </div>
+</main>
+<script>
+fetch('version.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){
+  if(!j)return; document.querySelector('.fn.l2.c').innerHTML='Version <span id="ver">'+j.version+'</span> · about '+j.sizeMb+' MB';
+  document.getElementById('dl').href='lantern-pilot.apk?v='+j.version;
+}).catch(function(){});
+</script>
+</body>
+</html>
