@@ -98,10 +98,11 @@
       '<div class="mat" style="padding:12px 14px"><p class="cap l2">Last night, you wrote</p><p class="fn hl">Big day. Breathe first.</p></div></div>' +
       '<div class="sim-tap" id="stap"></div>' +
       '<div class="sim-status" id="sstat"><span id="sclk" class="num">10:59</span><span class="row" style="gap:4px">' + ic('battery', 16, 2) + '</span></div></div>' +
-      '<div class="simsteps" id="ssteps">' + STEPS.map(function (s, k) { return '<div data-i="' + k + '"><span>' + ic(s[0], 16, 2.2) + '</span>' + s[1] + '</div>'; }).join('') + '</div>' +
+      '<div class="simsteps" id="ssteps" role="group" aria-label="Jump to a part of the night">' + STEPS.map(function (s, k) { return '<button data-i="' + k + '" data-a="demo" data-v="j' + k + '" data-k="demo_chapter"><span>' + ic(s[0], 16, 2.2) + '</span>' + s[1] + '</button>'; }).join('') + '</div>' +
+      '<p class="cap l2 c" style="margin-top:-12px">Tap any step to jump to it</p>' +
       '<div class="stack c" style="gap:4px;min-height:62px"><p class="hl" id="scap1" style="font-size:19px"></p><p class="sub l2" id="scap2"></p></div>' +
       '<div class="row" style="justify-content:center;gap:10px"><button class="btn glass sm" id="splay" data-a="demo" data-v="toggle" data-k="demo_play_pause">Pause</button><button class="btn plain sm" data-a="demo" data-v="replay" data-k="demo_replay">Replay</button></div>' +
-      '<div class="foot">' + (S.demoFrom === 'welcome' ? '<a href="#/o2" class="btn fill" data-k="demo_continue">Continue setup</a>' : '<a href="#/home" class="btn fill" data-k="demo_continue">Go to Tonight</a>') + '</div>', { cls: '' });
+      '<div class="fixfoot">' + (S.demoFrom === 'welcome' ? '<a href="#/o2" class="btn fill" data-k="demo_continue">Skip and continue setup</a>' : '<a href="#/home" class="btn fill" data-k="demo_continue">Back to Tonight</a>') + '</div>', { cls: 'tabs' });
   }, function () {
     var t = 0, playing = true, swipes = 0, nextSwipe = 1.2, phase = -1, fired = {};
     var $ = function (id) { return document.getElementById(id); };
@@ -162,7 +163,10 @@
       }
       if (t >= END && !fired.end) { fired.end = 1; T.tap('demo_finished'); $('splay').textContent = 'Play'; playing = false; }
     }
+    var JT = [2.05, 4.65, 18.75, 22.05, 24.65, 30.65, 39.85];
+    function jump(i) { reset(); for (var x = 0; x < JT[i]; x += 0.1) { t = x; frame(); } t = JT[i]; frame(); playing = true; $('splay').textContent = 'Pause'; }
     L._demo = function (v) {
+      if (v && v.charAt(0) === 'j') { jump(parseInt(v.slice(1), 10)); return; }
       if (v === 'replay' || (v === 'toggle' && fired.end)) { reset(); playing = true; }
       else playing = !playing;
       $('splay').textContent = playing ? 'Pause' : 'Play'; frame();
@@ -170,6 +174,20 @@
     reset(); frame();
     L.every(function () { if (playing) { t += 0.1; frame(); } }, 100);
   });
+  /* ---------- guided night walkthrough ---------- */
+  L.WALK = ['plan', 'metime-start', 'metime-ring', 'final-reel', 'ritual', 'note', 'lights-out', 'lights-out-reward', 'morning-sealed', 'morning-unlocked'];
+  L.WALK_T = ['Plan', 'Me-Time starts', 'The ring', 'Final Reel', 'Closing ritual', 'Note', 'Lights out', 'Reward', 'Morning', 'Message'];
+  A.walk = function () {
+    S.walk = true; S.walkI = 0;
+    S.planDone = false; S.encore = false; S.ringOpen = false; S.ringWarn = false; S.ringPaused = false; S.rec = 0; S.playing = false; S.hearted = false; S.placed = false;
+    L.go('plan'); return false;
+  };
+  A.walknext = function (v) {
+    var i = parseInt(v, 10);
+    if (i >= L.WALK.length) { S.walk = false; S.walkDone = true; L.toast('Walkthrough complete. Thank you.'); if (L.cur === 'home') return; L.go('home'); return false; }
+    L.go(L.WALK[i]); return false;
+  };
+  A.walkexit = function () { S.walk = false; };
   A.demofrom = function (v) { S.demoFrom = v; return false; };
   A.demo = function (v) { if (L._demo) L._demo(v); return false; };
   function def(id, title, html, mount) { L.SC[id] = { title: title, html: html, mount: mount }; }

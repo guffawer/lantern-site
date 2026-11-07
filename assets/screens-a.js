@@ -14,10 +14,14 @@
   /* ---------- start ---------- */
   def('start', 'Start', function () {
     return scr('<div class="stack c" style="padding-top:28px;gap:14px">' + icon() + '<h1>Lantern playtest</h1><p class="l2">A clickable preview of the app and the pages a loved one sees. Nothing here is real: no sign-up, no payments, no messages sent.</p></div>' +
-      '<div class="sec"><label class="hdr" for="tcode">Your first name or tester code</label><input id="tcode" class="field" maxlength="40" autocomplete="off" autocapitalize="words" enterkeyhint="done" placeholder="e.g. Priya or T-07" value="' + esc(S.tester) + '"></div>' +
+      '<div class="sec"><label class="hdr" for="tcode">Your first name or tester code (required)</label><input id="tcode" class="field req" maxlength="40" autocomplete="off" autocapitalize="words" enterkeyhint="done" placeholder="e.g. Priya or T-07" value="' + esc(S.tester) + '"><p id="thint" class="fn" style="color:var(--orange);padding:0 16px">Type a name above to continue</p></div>' +
       list([cell({ a: 'role', v: 'app', k: 'start_role', icon: 'moon', color: 'indigo', t: 'I\'m trying the app', s: 'Onboarding, nightly routine, mornings, Circles, Premium', chev: true }),
         cell({ a: 'role', v: 'sender', k: 'start_role', icon: 'chat', color: 'green', t: 'I\'m sending a message', s: 'Record a message, WhatsApp gift note, UPI gift page', chev: true })],
-        { ic: 1, f: 'To improve the design, this preview records which screens you open and which buttons you tap, with times. It never records anything you type.' }), { cls: 'pad' });
+        { ic: 1, cls: 'roles', f: 'To improve the design, this preview records which screens you open and which buttons you tap, with times. It never records anything you type.' }), { cls: 'pad' });
+  }, function () {
+    var el = document.getElementById('tcode'), ls = document.querySelector('.list.roles'), h = document.getElementById('thint');
+    function u() { var ok = el.value.trim().length > 0; ls.classList.toggle('dim', !ok); el.classList.toggle('req', !ok); h.style.display = ok ? 'none' : 'block'; }
+    el.addEventListener('input', u); u();
   });
   A.role = function (v) {
     var el = document.getElementById('tcode'), code = el ? el.value.trim() : '';
@@ -84,7 +88,7 @@
         '<div class="sec"><p class="hdr">Message preview</p><div class="card stack" style="gap:10px"><div class="row fn l2" style="gap:8px">' + L.sym('chat', 'green') + '<span>WhatsApp</span></div>' +
         '<p class="bubble">Hi Amma, I\'m trying to sleep on time. Will you record a good-morning message for me? It takes a minute, no app needed: [INVITE LINK]</p></div></div>' +
         '<div class="chips"><span class="badge">Amma</span><span class="badge">Papa</span><span class="badge">Partner</span><span class="badge">Best friend</span></div>' +
-        foot('<button class="btn fill" data-a="otp" data-v="on" data-k="invite_whatsapp">Invite via WhatsApp</button><a href="#/o6" class="btn plain" data-k="invite_skip">Skip for now</a>'));
+        foot('<button class="btn fill" data-a="otp" data-v="on" data-k="invite_whatsapp">Invite via WhatsApp</button><a href="#/o6" class="btn plain" style="min-height:36px;font-size:14px;color:var(--l2)" data-k="invite_skip">Skip for now</a>'));
     }
     return scr(L.prog(5, 'o4') + head('Verify your number', 'So Amma\'s message reaches only you. We ask only when you invite someone or join a Circle.') +
       list([cell({ lead: '<span class="l2" style="width:48px">+91</span>', t: '<input id="ph" inputmode="numeric" autocomplete="off" placeholder="Mobile number" aria-label="Mobile number">' }),
@@ -150,7 +154,7 @@
   def('o11', 'Onboarding 11 · Done', function () {
     return scr(L.prog(11, 'o10') + '<div class="stack c" style="gap:14px;padding-top:12px">' + icon() + '<h1>See you at Me-Time.</h1><p class="l2">Enjoy your evening. We\'ll say hello when it\'s time.</p></div>' + times() +
       list([cell({ href: 'premium', icon: 'sparkle', color: 'orange', t: 'Your 14-day trial has started', s: 'Day 1 of 14. 3 on-time nights in a row add 7 bonus days.', k: 'onb_trial' })], { ic: 1 }) +
-      foot('<a href="#/home" class="btn fill">Go to Tonight</a>'));
+      foot('<button class="btn fill" data-a="walk" data-k="walk_start" data-v="onboarding">Try your first night</button><a href="#/home" class="btn plain">Go to Tonight</a>'));
   });
 
   /* ---------- home ---------- */
@@ -166,6 +170,7 @@
       '<div class="row between" style="padding-top:6px"><div><p class="fn l2">Saturday</p><h1>Tonight</h1></div><div class="row" style="gap:10px">' +
       L.gbtn('sparkle2', 'Lantern Premium', 'premium', 'home_premium') + L.gbtn('gear', 'Settings', 'settings', 'home_settings') + '</div></div>' +
       '<div class="row between" style="margin-top:-12px"><p class="l2">Good evening, Arjun</p><a href="#/premium" class="badge o" data-k="home_trial_link">Trial · 15 days left</a></div>' +
+      '<div class="mat p stack" style="gap:12px;border-color:rgba(125,122,255,.55)"><div class="row" style="align-items:flex-start">' + L.sym('moon', 'indigo') + '<div class="stack" style="gap:2px"><p class="hl">' + (S.walkDone ? 'Replay tonight, step by step' : 'Try tonight, step by step') + '</p><p class="fn l2">10 quick screens: plan, Me-Time ring, Final Reel, ritual, lights out and the morning message. About 3 minutes.</p></div></div><button class="btn fill sm" style="width:100%" data-a="walk" data-k="walk_start" data-v="home">' + ic('play', 16, 2.4) + (S.walkDone ? 'Replay walkthrough' : 'Start walkthrough') + '</button></div>' +
       '<div class="mat p stack" style="gap:16px"><div class="row" style="gap:18px">' +
       '<a href="#/metime-start" aria-label="Sleep timer, preview tonight" data-k="home_timer" style="position:relative;width:120px;height:120px;flex:none;display:block">' +
       '<svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="48" fill="none" stroke="rgba(94,92,230,.25)" stroke-width="12"/><circle id="hdash" cx="60" cy="60" r="48" fill="none" stroke="#5E5CE6" stroke-width="12" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="' + (301.6 * (1 - S.secs / 10800)) + '" transform="rotate(-90 60 60)"/></svg>' +

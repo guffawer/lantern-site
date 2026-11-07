@@ -133,12 +133,17 @@
   var roleLabel = { app: 'Trying the app', sender: 'Sending a message', '': 'Start' };
   function bar() {
     var cur = L.cur || 'start';
+    if (S.walk && L.WALK) {
+      var i = Math.min(S.walkI, L.WALK.length - 1), last = i >= L.WALK.length - 1;
+      return '<div class="ptbar walk"><span>Night ' + (i + 1) + ' of ' + L.WALK.length + ' · ' + L.WALK_T[i] + '</span><button class="nx" data-a="walknext" data-k="walk_next" data-v="' + (i + 1) + '">' + (last ? 'Finish' : 'Next') + '</button><button data-a="menu" data-k="menu_open" aria-label="Playtest menu">Menu</button></div>';
+    }
     return '<div class="ptbar"><span>Lantern playtest · ' + roleLabel[S.role || ''] + '</span><button data-a="menu" data-k="menu_open" aria-label="Playtest menu">Menu</button></div>';
   }
   function menuHtml() {
     var h = '<div class="sheet" data-sheet="1"><div role="dialog" aria-label="Playtest menu"><div class="grab"></div><div class="row between"><h2>Playtest</h2><button class="gbtn" data-a="closesheet" aria-label="Close">' + ic('x', 18, 2.4) + '</button></div>' +
       '<p class="fn l2">Tester: <b style="color:#fff">' + L.esc(S.tester || 'not set') + '</b>. Jump to any screen and keep testing from there.</p>' +
-      '<button class="btn fill" data-a="report" data-k="report_open">Send test report</button>';
+      '<button class="btn fill" data-a="report" data-k="report_open">Send test report</button>' +
+      (S.walk ? '<a class="btn gray" href="#/home" data-a="walkexit" data-k="walk_exit">Exit night walkthrough</a>' : '');
     MENU.forEach(function (g) {
       if (S.role && g[2] !== S.role) return;
       var cells = [];
@@ -192,6 +197,7 @@
     }
     closeSheet();
     L.cur = id;
+    if (S.walk && L.WALK) { var wi = L.WALK.indexOf(id); if (wi >= 0) S.walkI = wi; }
     T.screen(id);
     render(false);
   }

@@ -267,3 +267,23 @@ a.cell:active,button.cell:active{background:var(--bg3)}
 .simsteps{grid-template-columns:repeat(7,minmax(0,1fr));gap:2px}
 .simsteps div{font-size:10px;text-align:center;line-height:1.15}
 .simsteps span{width:34px;height:34px}
+/* walkthrough bar, demo footer, start gating */
+.ptbar span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ptbar.walk{background:#1B1A45;color:#fff;font-weight:600}
+.ptbar .nx{background:var(--tint);color:#fff;font-weight:600;font-size:13px;height:26px;border-radius:999px;padding:0 14px;margin-right:4px}
+.fixfoot{position:fixed;z-index:40;left:50%;transform:translateX(-50%);bottom:0;width:min(430px,100%);padding:26px 16px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(0,0,0,0),#000 40%)}
+.list.dim{opacity:.4}
+.field.req{outline:2px solid rgba(255,159,10,.7)}
+.simsteps>*{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--l3);text-align:center;line-height:1.15;transition:color .3s}
+.simsteps button{background:none;border:0;padding:0;cursor:pointer;font-family:inherit;letter-spacing:0}
+.simsteps>.on{color:var(--l1)}.simsteps>.on span{background:var(--tint);color:#fff;transform:scale(1.1)}.simsteps>.done span{background:rgba(94,92,230,.32);color:#fff}
+/* walkthrough bar, demo footer, start gating */
+.ptbar span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ptbar.walk{background:#1B1A45;color:#fff;font-weight:600}
+.ptbar .nx{background:var(--tint);color:#fff;font-weight:600;font-size:13px;height:26px;border-radius:999px;padding:0 14px;margin-right:4px}
+.fixfoot{position:fixed;z-index:40;left:50%;transform:translateX(-50%);bottom:0;width:min(430px,100%);padding:26px 16px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(0,0,0,0),#000 40%)}
+.list.dim{opacity:.4}
+.field.req{outline:2px solid rgba(255,159,10,.7)}
+.simsteps>*{display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--l3);text-align:center;line-height:1.15;transition:color .3s}
+.simsteps button{background:none;border:0;padding:0;cursor:pointer;font-family:inherit;letter-spacing:0}
+.simsteps>.on{color:var(--l1)}.simsteps>.on span{background:var(--tint);color:#fff;transform:scale(1.1)}.simsteps>.done span{background:rgba(94,92,230,.32);color:#fff}
