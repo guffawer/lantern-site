@@ -29,9 +29,9 @@
 
   /* ---------- onboarding ---------- */
   def('welcome', 'Welcome', function () {
-    return scr('<div class="stack c" style="flex:1;justify-content:center;gap:16px">' + icon() + '<h1 style="font-size:36px">Don\'t fight the night.<br>Give it an ending.</h1>' +
-      '<p class="l2">Keep your scroll time. Lantern helps it end when you planned, and makes going to sleep the best part of the night.</p></div>' +
-      list([cell({ icon: 'sparkle', color: 'orange', t: 'Your 14-day trial starts today', s: 'Everything included, no payment details. Then Rs 99 a month or Rs 599 a year.' })], { ic: 1 }) +
+    return scr('<div class="stack c" style="gap:12px">' + icon(1) + '<h1 class="t1">Don\'t fight the night.<br>Give it an ending.</h1><span class="badge o" style="align-self:center">' + ic('sparkle', 13, 2.4) + '14 days free · no payment details</span></div>' +
+      '<div class="sec"><p class="hdr">How Lantern works</p><div class="card" style="padding:10px 18px">' + L.howV() + '</div></div>' +
+      '<a href="#/demo" class="btn glass" data-a="demofrom" data-v="welcome" data-k="welcome_demo">' + ic('play', 18, 2.4) + 'Watch it on a reels app · 25 sec</a>' +
       foot('<a href="#/o2" class="btn fill" data-k="welcome_start">Start my 14 days</a><p class="fn l2 c">No sign-up needed. About 3 minutes.</p>'), { cls: 'pad' });
   });
 
@@ -49,7 +49,7 @@
 
   var CARDS = [
     { kicker: 'Me-Time', head: 'A guilt-free window that is all yours', body: 'Scroll, watch, play. One quiet hello when it starts, then silence. A small ring shows how much is left.', icon: 'play', c: 'indigo' },
-    { kicker: 'Final Reel', head: 'Finish the one you are on', body: 'At your last-scroll time you get a Final Reel, then a short closing ritual: plug in, flip it over, lights out.', icon: 'moon', c: 'purple' },
+    { kicker: 'Final Reel', head: 'Finish the one you are on', body: 'At your last-scroll time you get one Final Reel. Then: plug in your phone, turn it face-down, turn off the light.', icon: 'moon', c: 'purple' },
     { kicker: 'Morning Drop', head: 'Wake up to something worth it', body: 'Sleep on time and a sealed message from someone who loves you opens in the morning, plus a note from last-night you.', icon: 'mail', c: 'orange' }
   ];
   def('o3', 'Onboarding 3 · How the night works', function () {
@@ -57,7 +57,7 @@
     return scr(L.prog(3, 'o2') + '<div class="stack"><p class="fn l2">How your night works</p><h1 class="t1">Three moments. That\'s the whole app.</h1></div>' +
       '<div class="card stack c" style="flex:1;justify-content:center;gap:14px;padding:30px 22px;animation:rise .35s ease-out both">' +
       '<span style="width:84px;height:84px;border-radius:24px;background:' + L.COL[c.c] + ';color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)">' + ic(c.icon, 40, 2) + '</span>' +
-      '<p class="fn l2">' + (i + 1) + ' of 3 · ' + c.kicker + '</p><h2>' + c.head + '</h2><p class="l2">' + c.body + '</p></div>' +
+      '<p class="fn l2">' + (i + 1) + ' of 3 · ' + c.kicker + '</p><h2>' + c.head + '</h2><p class="l2">' + c.body + '</p>' + (i === 1 ? '<div class="row" style="gap:10px;justify-content:center">' + L.pic('plug', { size: 56 }) + L.pic('flip', { size: 56 }) + L.pic('lights', { size: 56 }) + '</div>' : '') + '</div>' +
       '<div class="dots" aria-hidden="true">' + CARDS.map(function (x, k) { return '<i class="' + (k === i ? 'on' : '') + '"></i>'; }).join('') + '</div>' +
       foot((i < 2 ? '<button class="btn fill" data-a="loop" data-v="next" data-k="onb_loop">Next</button>' : '<a href="#/o4" class="btn fill">Set my first plan</a>') +
         (i > 0 ? '<button class="btn plain" data-a="loop" data-v="prev" data-k="onb_loop">Back</button>' : '')));
@@ -137,8 +137,8 @@
   A.brand = function (v) { S.brand = v; };
   def('o10', 'Onboarding 10 · Lights-Out preview', function () {
     if (!S.placed) {
-      return scr(L.prog(10, 'o9') + head('Feel what an on-time night feels like', 'Place your phone face-down on a table, right now.') +
-        '<div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:240px"><div style="width:130px;height:240px;border-radius:30px;border:2px dashed var(--l3);display:flex;align-items:center;justify-content:center;color:var(--l2);transform:rotate(-8deg)">' + ic('facedown', 52, 1.5) + '</div></div>' +
+      return scr(L.prog(10, 'o9') + head('Feel what an on-time night feels like', 'Turn your phone over so the screen faces the table, right now.') +
+        '<div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:240px">' + L.pic('flip', { size: 200 }) + '</div>' +
         foot('<button class="btn glass" data-a="place" data-k="preview_place">Simulate: phone placed face-down</button>'));
     }
     return scr('<div class="edge"></div>' + L.prog(10, 'o9') +
@@ -173,8 +173,9 @@
       '<div class="stack" style="gap:6px;flex:1"><p class="fn l2">Sleep timer</p><h3 style="font-size:18px">Me-Time at ' + L.fmtMin(S.t - S.len) + '</h3><span class="badge g">' + ic('check', 13, 2.6) + 'Plan confirmed</span></div></div>' +
       '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center"><div><p class="cap l2">Me-Time</p><p class="hl num">' + L.fmtMin(S.t - S.len) + '</p></div><div><p class="cap l2">Final Reel</p><p class="hl num">' + L.fmtMin(S.t) + '</p></div><div><p class="cap l2">Lights out</p><p class="hl num">' + L.fmtMin(S.t + 30) + '</p></div></div>' +
       '<a href="#/plan" class="btn glass sm" style="align-self:center" data-k="home_change_plan">' + ic('edit', 16, 2) + 'Change plan</a></div>' +
-      '<div class="mat">' + cell({ href: 'ritual', k: 'home_ritual', lead: '<span aria-hidden="true" style="width:46px;height:46px;flex:none;border-radius:12px;background:linear-gradient(180deg,#F4A259 0%,#B5577A 45%,#2C2466 100%);position:relative;overflow:hidden"><span style="position:absolute;left:50%;bottom:-7px;margin-left:-12px;width:24px;height:24px;border-radius:50%;background:#FFE0A3"></span></span>', t: 'Night ritual · ' + ({ sunset: 'Sunset', lamp: 'Lamp', book: 'Book' }[S.theme]), s: '6 seconds · Plug in, flip it over, lights out' }) +
+      '<div class="mat">' + cell({ href: 'ritual', k: 'home_ritual', lead: '<span aria-hidden="true" style="width:46px;height:46px;flex:none;border-radius:12px;background:linear-gradient(180deg,#F4A259 0%,#B5577A 45%,#2C2466 100%);position:relative;overflow:hidden"><span style="position:absolute;left:50%;bottom:-7px;margin-left:-12px;width:24px;height:24px;border-radius:50%;background:#FFE0A3"></span></span>', t: 'Night ritual · ' + ({ sunset: 'Sunset', lamp: 'Lamp', book: 'Book' }[S.theme]), s: '6 seconds · then charge, face-down, lights off' }) +
       cell({ href: 'morning-held', k: 'home_message', icon: 'mail', color: 'orange', t: 'A message from Amma is waiting', s: 'Opens after an on-time night' }) + '</div>' +
+      '<div class="mat p stack" style="gap:14px"><div class="row between"><h3 style="font-size:17px">How Lantern works</h3><a href="#/demo" class="fn hl" data-a="demofrom" data-v="home" data-k="home_demo">' + ic('play', 13, 2.6) + ' Watch demo</a></div>' + L.howH() + '</div>' +
       '<div class="mat p stack" style="gap:14px"><div class="row between"><h3 style="font-size:17px">4 of 7 on-time nights</h3><span class="fn l2">This week</span></div><div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px">' + days + '</div></div>' +
       L.nav('tonight'), { cls: 'sky tabs' });
   }, function () {
@@ -247,8 +248,9 @@
     else if (th === 'lamp') art = '<div class="abs" style="background:#07061A"></div><div style="position:absolute;left:50%;top:70px;width:280px;height:280px;margin-left:-140px;border-radius:50%;background:radial-gradient(circle,rgba(255,206,130,.45),rgba(255,206,130,0) 65%);animation:lampdim 6s ease-in-out both"></div><div style="position:absolute;left:50%;top:150px;margin-left:-50px;width:100px;height:66px;background:linear-gradient(180deg,#FFD9A0,#F2B35E);border-radius:50px 50px 8px 8px;animation:lampdim 6s ease-in-out both"></div><div style="position:absolute;left:50%;top:216px;margin-left:-3px;width:6px;height:110px;background:#3A3A3C"></div><div style="position:absolute;left:50%;top:324px;margin-left:-40px;width:80px;height:10px;border-radius:6px;background:#3A3A3C"></div>';
     else art = '<div class="abs" style="background:#07061A"></div><div style="position:absolute;left:50%;top:60px;width:300px;height:300px;margin-left:-150px;border-radius:50%;background:radial-gradient(circle,rgba(255,206,130,.35),rgba(255,206,130,0) 65%);animation:lampdim 6s ease-in-out both"></div><div style="position:absolute;left:50%;top:120px;margin-left:-120px;width:240px;height:160px;perspective:900px"><div style="position:absolute;left:0;top:0;width:120px;height:160px;background:#F2F2F7;border-radius:10px 2px 2px 10px;padding:22px 16px;display:flex;flex-direction:column;gap:10px"><div style="height:5px;border-radius:3px;background:#C7C7CC"></div><div style="height:5px;width:80%;border-radius:3px;background:#C7C7CC"></div><div style="height:5px;border-radius:3px;background:#C7C7CC"></div><div style="height:5px;width:60%;border-radius:3px;background:#C7C7CC"></div></div><div style="position:absolute;left:120px;top:0;width:120px;height:160px;background:linear-gradient(135deg,#5E5CE6,#3634A3);border-radius:2px 10px 10px 2px;transform-origin:left center;animation:bookclose 5s ease-in-out .6s both"></div></div>';
     return scr(L.top('final-reel', '<span class="fn">Closing ritual</span>', '<button class="btn glass sm" data-a="replay" data-k="ritual_replay">Replay</button>') +
-      '<div data-run="' + S.run + '" style="position:relative;height:420px;border-radius:32px;overflow:hidden;flex:none">' + art +
-      '<div style="position:absolute;left:0;right:0;bottom:34px;text-align:center;padding:0 24px;animation:textin 6.5s ease-out both"><p style="font-size:22px;font-weight:700;color:#fff">Plug in, flip it over, lights out.</p></div></div>' +
+      '<div data-run="' + S.run + '" style="position:relative;height:340px;border-radius:32px;overflow:hidden;flex:none">' + art +
+      '<div style="position:absolute;left:0;right:0;bottom:34px;text-align:center;padding:0 24px;animation:textin 6.5s ease-out both"><p style="font-size:22px;font-weight:700;color:#fff">Time to close the night.</p></div></div>' +
+      '<div class="sec"><p class="hdr">Next, three quick steps</p>' + L.wind3({ size: 64 }) + '</div>' +
       '<div class="sec"><p class="hdr">Theme</p>' + L.seg([['sunset', 'Sunset'], ['lamp', 'Lamp'], ['book', 'Book']], th, 'theme', 'ritual_theme') + '</div>' +
       foot('<a href="#/note" class="btn fill" data-k="ritual_continue">Continue</a>'));
   });
@@ -265,10 +267,10 @@
   });
   A.chip = function (v) { S.note = CHIPS[parseInt(v, 10)]; };
   def('lights-out', 'Lights-Out waiting', function () {
-    function item(icon, color, label, ok) { return cell({ icon: icon, color: ok ? color : 'gray', t: label, right: ok ? '<span style="color:var(--green)">' + ic('check', 20, 2.8) + '</span>' : '<span class="fn l2">Waiting</span>' }); }
-    return scr(L.top('note') + '<div class="stack"><p class="fn l2">Lights out by 12:00 am</p><h1 class="t1">Plug in, flip it over, lights out.</h1><p class="l2">The moment all three happen, you\'re down for the night.</p></div>' +
-      list([item('plug', 'green', 'Charging', true), item('facedown', 'indigo', 'Face-down', false), item('moon', 'purple', 'Room is dark', false)], { ic: 1 }) +
-      foot('<a href="#/lights-out-reward" class="btn fill" data-k="lights_out_sleep">' + ic('moon', 18, 2.2) + 'I\'m going to sleep</a><a href="#/lights-out-reward" class="btn glass" data-k="lights_out_simulate">Simulate: phone flipped in a dark room</a>'));
+    return scr(L.top('note') + '<div class="stack"><p class="fn l2">Lights out by 12:00 am</p><h1 class="t1">Three last steps</h1><p class="l2">Do all three and you\'re down for the night.</p></div>' +
+      L.wind3({ status: [true, false, false], size: 78 }) +
+      list([cell({ icon: 'plug', color: 'green', t: 'Phone charging', s: 'Connect the charger cable to your phone' }), cell({ icon: 'phone', color: 'indigo', t: 'Screen facing down', s: 'Turn the phone over so the screen touches the table or bed' }), cell({ icon: 'moon', color: 'purple', t: 'Room is dark', s: 'Switch off the light in your room' })], { ic: 1 }) +
+      foot('<a href="#/lights-out-reward" class="btn fill" data-k="lights_out_sleep">' + ic('moon', 18, 2.2) + 'I\'m going to sleep</a><a href="#/lights-out-reward" class="btn glass" data-k="lights_out_simulate">Simulate: phone face-down in a dark room</a>'));
   });
   def('lights-out-reward', 'Lights-Out reward', function () {
     return scr('<div class="edge"></div>' +

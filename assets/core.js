@@ -125,7 +125,7 @@
 
   /* ---------- playtest menu ---------- */
   var MENU = [
-    ['App · onboarding', ['welcome', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7', 'o8', 'o9', 'o10', 'o11'], 'app'],
+    ['App · onboarding', ['welcome', 'demo', 'o2', 'o3', 'o4', 'o5', 'o6', 'o7', 'o8', 'o9', 'o10', 'o11'], 'app'],
     ['App · nightly loop', ['home', 'plan', 'metime-start', 'metime-ring', 'final-reel', 'ritual', 'note', 'lights-out', 'lights-out-reward'], 'app'],
     ['App · morning, circles, premium', ['morning-sealed', 'morning-unlocked', 'morning-held', 'morning-self', 'morning-self-none', 'circle-night', 'circle-invite', 'premium', 'trial', 'settings', 'trial-ended'], 'app'],
     ['Sender · no install', ['sender-record', 'sender-sent', 'gift-nudge', 'sender-gift'], 'sender']
